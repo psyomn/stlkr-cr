@@ -1,27 +1,22 @@
 #!/usr/bin/env ruby
 
+
 root = File.expand_path(File.join(File.dirname(__FILE__),'..'))
 if File.directory?(File.join(root,'.git'))
   Dir.chdir(root) do
     begin
       require 'bundler/setup'
-      require 'libnotify'
     rescue LoadError => e
       warn e.message
       warn "Run `gem install bundler` to install Bundler"
-      exit -1
+      exit(-1)
     end
   end
 end
 
-n = Libnotify.new do |notify|
-  notify.summary = "hello"
-  notify.body = "world"
-  notify.timeout = 1.5
-  notify.urgency = :critical
-  notify.append = false
-  notify.transient = true
-end
-n.show!
-puts "show stuff"
+require 'libnotify'
+require 'stlkr'
+
+include Stlkr
+Boot.up!
 
