@@ -23,4 +23,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'yard', '~> 0.8'
 
   gem.add_runtime_dependency 'libnotify', '~> 0.9.1'
+  gem.add_runtime_dependency 'nokogiri', '~> 1.6.6.2'
 end
