@@ -21,6 +21,7 @@ class StalkerService
         if prev != new
           print " Site has changed!"
           w.insert
+          notify_changed(w)
         end
 
         puts
@@ -31,6 +32,17 @@ class StalkerService
 
   private
 
+  def notify_changed(w)
+    Libnotify.show(
+      :body => "#{w.url}",
+      :summary => "#{w.url} has changed",
+      :timeout => 2.5,
+      :icon_path => "/usr/share/icons/Tango/scalable/emblems/emblem-system.svg"
+    )
+  end
+
+  # TODO this should simply check file timestamp and see if it has been altered
+  # since last read
   def db_changed?
     true
   end
