@@ -1,4 +1,4 @@
-require 'stalker'
+require 'stlkr'
 require 'fileutils'
 
 module Stlkr
