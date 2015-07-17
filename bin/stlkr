@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 
-
 root = File.expand_path(File.join(File.dirname(__FILE__),'..'))
 if File.directory?(File.join(root,'.git'))
   Dir.chdir(root) do
@@ -14,9 +13,49 @@ if File.directory?(File.join(root,'.git'))
   end
 end
 
-require 'libnotify'
 require 'stlkr'
+require 'optparse'
 
 include Stlkr
 Boot.up!
 
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "stlkr: [options]"
+
+  opts.on('-a', '--add-link <url>', 'add a link to monitor') do |v|
+    options[:add_link] = v
+  end
+
+  opts.on('-d', '--delete-link <link-id>', 'delete link from monitor list') do |v|
+    options[:delete_link] = v
+  end
+
+  opts.on('-s', '--start-service', 'start the stalker service') do |v|
+    options[:start_service] = v
+  end
+
+  opts.on('-x', '--stop-service', 'stop the stalker service') do |v|
+    options[:stop_service] = v
+  end
+
+  opts.on('-z', '--daemonize', 'run stlkr in background') do |v|
+    options[:daemonize] = v
+  end
+end.parse!
+
+p Website.all
+
+if options[:add_link]
+  w = Website.new(options[:add_link])
+  w.insert
+
+elsif options[:delete_link]
+  w = Website.delete options[:delete_link]
+
+elsif options[:start_service]
+elsif options[:stop_service]
+elsif options[:daemonize]
+  StalkerService.new.run
+
+end
