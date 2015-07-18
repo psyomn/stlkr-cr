@@ -56,6 +56,14 @@ elsif options[:delete_link]
 elsif options[:start_service]
 elsif options[:stop_service]
 elsif options[:daemonize]
-  StalkerService.new.run
+  th = Thread.new do
+    StalkerService.new.run
+  end
+  th.run
+
+  si = Gtk::StatusIcon.new
+  si.stock = Gtk::Stock::DIALOG_INFO
+  Gtk.main
+
 
 end

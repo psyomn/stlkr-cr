@@ -1,5 +1,6 @@
 require 'stlkr'
 require 'libnotify'
+require 'gtk2'
 
 module Stlkr
 # @author psyomn

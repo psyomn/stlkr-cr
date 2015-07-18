@@ -24,4 +24,5 @@ Gem::Specification.new do |gem|
 
   gem.add_runtime_dependency 'libnotify', '~> 0.9.1'
   gem.add_runtime_dependency 'nokogiri', '~> 1.6.6.2'
+  gem.add_runtime_dependency 'gtk2', '~> 2.2.5'
 end
