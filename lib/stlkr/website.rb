@@ -33,7 +33,7 @@ class Website
   def insert
     cont = Website.load_contents
     cont[@url] = {
-      hashcode: @hash
+      hashcode: @hashcode
     }
     Website.store_contents(cont)
   end

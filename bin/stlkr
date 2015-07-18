@@ -44,8 +44,6 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-p Website.all
-
 if options[:add_link]
   w = Website.new(options[:add_link])
   w.insert
@@ -65,5 +63,6 @@ elsif options[:daemonize]
   si.stock = Gtk::Stock::DIALOG_INFO
   Gtk.main
 
-
 end
+
+p Website.all
