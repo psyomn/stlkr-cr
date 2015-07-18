@@ -80,6 +80,8 @@ class Website
 
   attr_accessor :url
   attr_accessor :hashcode
+  attr_accessor :username
+  attr_accessor :password
 
 end
 end
