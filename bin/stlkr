@@ -42,6 +42,10 @@ OptionParser.new do |opts|
   opts.on('-z', '--daemonize', 'run stlkr in background') do |v|
     options[:daemonize] = v
   end
+
+  opts.on('-ls') do |v|
+    options[:ls] = true
+  end
 end.parse!
 
 if options[:add_link]
@@ -63,6 +67,9 @@ elsif options[:daemonize]
   si.stock = Gtk::Stock::DIALOG_INFO
   Gtk.main
 
-end
+elsif options[:ls]
+  Website.all.each do |site|
+    puts site.url
+  end
 
-p Website.all
+end

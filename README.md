@@ -7,9 +7,30 @@
 
 ## Description
 
-TODO: Description
+This is your friendly stalker, your personal informant on changes that may
+happen to some static sites. At the moment it doesn't work perfectly, but should
+make your life a little easier with sites you only want to check whenever they
+are updated.
 
 ## Features
+
+You first need to add a few sites to your collection:
+
+    stlkr -a http://www.google.com
+    stlkr -a http://www.textfiles.com/computers/144disk.txt
+    stlkr -a http://www.nhk.or.jp
+
+Then you can start the service this way:
+
+    stlkr -z
+
+You can list the current sites you're stalking this way:
+
+    stlkr -ls
+
+And you can remove a site this way:
+
+    stlkr -d http://www.google.com
 
 ## Examples
 
@@ -17,16 +38,20 @@ TODO: Description
 
 ## Requirements
 
+You'll possibly need the headers of the following
+
+* GTK2
+* libnotify
+
 ## Install
 
     $ gem install stlkr
-
-## Synopsis
-
-    $ stlkr
 
 ## Copyright
 
 Copyright (c) 2015 psyomn
 
-See {file:LICENSE.txt} for details.
+## LICENSE
+
+MIT
+
