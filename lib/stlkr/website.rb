@@ -24,6 +24,8 @@ class Website
     hh = self.load_contents
     hh.each do |k,v|
       w = Website.new(k, hh[k][:hashcode])
+      w.username = hh[k][:username]
+      w.password = hh[k][:password]
       ws.push w
     end
     ws
@@ -33,7 +35,9 @@ class Website
   def insert
     cont = Website.load_contents
     cont[@url] = {
-      hashcode: @hashcode
+      hashcode: @hashcode,
+      username: @username,
+      password: @password
     }
     Website.store_contents(cont)
   end
@@ -75,7 +79,7 @@ class Website
   end
 
   def to_s
-    "<Website #{@url} #{@hashcode}>"
+    "<Website url:#{@url} hash:#{@hashcode} usr:#{@username} pass:#{@password}>"
   end
 
   attr_accessor :url
