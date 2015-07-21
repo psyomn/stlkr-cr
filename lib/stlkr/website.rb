@@ -49,9 +49,11 @@ class Website
   end
 
   def fetch!
-    uri = URI(@url)
-    contents = Net::HTTP.get(uri)
-    @hashcode = Website.hashify(contents)
+    if @username.nil? || @password.nil?
+      plain_fetch!
+    else
+      auth_fetch!
+    end
   end
 
   def self.hashify(http_contents)
@@ -86,6 +88,23 @@ class Website
   attr_accessor :hashcode
   attr_accessor :username
   attr_accessor :password
+
+  private
+
+  def auth_fetch!
+    uri = URI(@url)
+    http = Net::HTTP.new(uri.host, uri.port)
+    request = Net::HTTP::Get.new(uri.request_uri)
+    request.basic_auth(@username, @password)
+    response = http.request(request)
+    @hashcode = Website.hashify(response.body)
+  end
+
+  def plain_fetch!
+    uri = URI(@url)
+    contents = Net::HTTP.get(uri)
+    @hashcode = Website.hashify(contents)
+  end
 
 end
 end
