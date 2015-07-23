@@ -20,6 +20,10 @@ You first need to add a few sites to your collection:
     stlkr -a http://www.textfiles.com/computers/144disk.txt
     stlkr -a http://www.nhk.or.jp
 
+You can also add basic password protected sites like this:
+
+    stlkr -a http://www.somplace.com/protectedpage.html -u username -p password
+
 Then you can start the service this way:
 
     stlkr -z
@@ -31,6 +35,10 @@ You can list the current sites you're stalking this way:
 And you can remove a site this way:
 
     stlkr -d http://www.google.com
+
+Everything is stored in text form inside a yaml file:
+
+    $HOME/.config/stlkr/uris
 
 ## Examples
 
