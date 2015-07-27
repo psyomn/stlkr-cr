@@ -43,7 +43,7 @@ OptionParser.new do |opts|
     options[:daemonize] = v
   end
 
-  opts.on('-ls') do |v|
+  opts.on('-ls', '--ls-sites', 'list the websites monitored') do |v|
     options[:ls] = true
   end
 
