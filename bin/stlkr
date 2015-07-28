@@ -43,8 +43,8 @@ OptionParser.new do |opts|
     options[:daemonize] = v
   end
 
-  opts.on('-ls', '--ls-sites', 'list the websites monitored') do |v|
-    options[:ls] = true
+  opts.on('-l', '--ls-sites', 'list the websites monitored') do |v|
+    options[:ls] = v
   end
 
   opts.on('-u', '--username USERNAME', 'set the http username') do |v|
