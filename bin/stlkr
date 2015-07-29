@@ -54,6 +54,14 @@ OptionParser.new do |opts|
   opts.on('-p', '--password PASSWORD', 'set the http password') do |v|
     options[:password] = v
   end
+
+  opts.on('', '--with-gtk', 'enable gtk such that there is a tray icon') do |v|
+    options[:with_gtk] = v
+  end
+
+  opts.on('', '--with-libnotify', 'enable libotify for desktop notifications') do |v|
+    options[:with_libnotify] = v
+  end
 end.parse!
 
 
