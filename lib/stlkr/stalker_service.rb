@@ -5,9 +5,11 @@ require 'gtk2'
 module Stlkr
 # @author psyomn
 class StalkerService
+
   def initialize
     @done = false
   end
+
   def run
     ws = load_websites
     until @done do
