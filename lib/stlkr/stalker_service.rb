@@ -1,13 +1,15 @@
 require 'stlkr'
 require 'libnotify'
 require 'gtk2'
+require 'time'
 
 module Stlkr
-# @author psyomn
+# author psyomn
 class StalkerService
 
   def initialize
     @done = false
+    @last_date = read_last_timestamp
   end
 
   def run
@@ -47,7 +49,27 @@ class StalkerService
   # TODO this should simply check file timestamp and see if it has been altered
   # since last read
   def db_changed?
-    true
+    if timestamp_file_exists?
+      # Check last file modification date (we just touch whenever updating)
+      if @last_date != read_last_timestamp
+        @last_date = read_last_timestamp
+        true
+      else
+        false
+      end
+    else
+      false
+    end
+  end
+
+  # Check if there is a timestamp file
+  def timestamp_file_exists?
+    File.exist? TIMESTAMPFILE
+  end
+
+  def read_last_timestamp
+    return File.mtime(TIMESTAMPFILE) if timestamp_file_exists?
+    nil
   end
 
   def load_websites
