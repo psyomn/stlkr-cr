@@ -4,7 +4,7 @@ require 'gtk2'
 require 'time'
 
 module Stlkr
-# author psyomn
+# @author psyomn
 class StalkerService
 
   def initialize
@@ -52,6 +52,7 @@ class StalkerService
     if timestamp_file_exists?
       # Check last file modification date (we just touch whenever updating)
       if @last_date != read_last_timestamp
+        puts "Updating file list"
         @last_date = read_last_timestamp
         true
       else

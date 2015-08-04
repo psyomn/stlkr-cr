@@ -40,12 +40,14 @@ class Website
       password: @password
     }
     Website.store_contents(cont)
+    FileUtils.touch(TIMESTAMPFILE)
   end
 
   def self.delete(url)
     cont = Website.load_contents
     cont.delete url
     Website.store_contents(cont)
+    FileUtils.touch(TIMESTAMPFILE)
   end
 
   def fetch!
