@@ -31,3 +31,6 @@ require "bundler/gem_tasks"
 require 'yard'
 YARD::Rake::YardocTask.new  
 task :doc => :yard
+
+require 'inch/rake'
+Inch::Rake::Suggest.new
