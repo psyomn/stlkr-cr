@@ -86,9 +86,13 @@ elsif options[:daemonize]
   end
   th.run
 
-  si = Gtk::StatusIcon.new
-  si.stock = Gtk::Stock::DIALOG_INFO
-  Gtk.main
+  if options[:with_gtk]
+    si = Gtk::StatusIcon.new
+    si.stock = Gtk::Stock::DIALOG_INFO
+    Gtk.main
+  end
+
+  th.join
 
 elsif options[:ls]
   Website.all.each do |site|
