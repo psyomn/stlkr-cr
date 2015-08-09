@@ -16,15 +16,13 @@ class StalkerService
     ws = load_websites
     until @done do
       ws = db_changed? ? load_websites : ws
-      puts 'refresh'
       ws.each do |w|
         prev = w.hashcode
-        print "Rechecking #{w} ..."
         w.fetch!
         new = w.hashcode
 
         if prev != new
-          print " Site has changed!"
+          print "[#{Time.now}] Changed: #{w}"
           w.insert
           notify_changed(w) if libnotify_enabled
         end
