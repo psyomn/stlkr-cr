@@ -26,7 +26,7 @@ class StalkerService
         if prev != new
           print " Site has changed!"
           w.insert
-          notify_changed(w)
+          notify_changed(w) if libnotify_enabled
         end
 
         puts
@@ -34,6 +34,10 @@ class StalkerService
       sleep Stlkr::INTERVAL
     end
   end
+
+  attr_accessor :libnotify_enabled
+  attr_accessor :done
+  attr_accessor :last_date
 
   private
 

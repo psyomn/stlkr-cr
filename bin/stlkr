@@ -60,7 +60,7 @@ OptionParser.new do |opts|
   end
 
   opts.on('', '--with-libnotify', 'enable libotify for desktop notifications') do |v|
-    options[:with_libnotify] = v
+    options[:with_libnotify] = true
   end
 end.parse!
 
@@ -82,7 +82,9 @@ elsif options[:stop_service]
 
 elsif options[:daemonize]
   th = Thread.new do
-    StalkerService.new.run
+    ss = StalkerService.new
+    ss.libnotify_enabled = options[:with_libnotify]
+    ss.run
   end
   th.run
 
