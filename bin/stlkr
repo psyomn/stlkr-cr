@@ -76,6 +76,7 @@ elsif options[:delete_link]
 
 elsif options[:start_service]
   # TODO: this shold start the daemon
+  Daemons.run_proc('stlkr -z')
 
 elsif options[:stop_service]
   # TODO: this should stop the daemon
