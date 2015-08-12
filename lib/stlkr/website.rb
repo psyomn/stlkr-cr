@@ -107,6 +107,9 @@ class Website
 
   private
 
+
+  # Fetch information from password protected site (basic authentication, no
+  # fancy login etc)
   def auth_fetch!
     uri = URI(@url)
     http = Net::HTTP.new(uri.host, uri.port)
@@ -116,6 +119,7 @@ class Website
     @hashcode = Website.hashify(response.body)
   end
 
+  # Fetch information from site, without password protection
   def plain_fetch!
     uri = URI(@url)
     contents = Net::HTTP.get(uri)
