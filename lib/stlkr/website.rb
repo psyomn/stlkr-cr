@@ -5,14 +5,7 @@ require 'net/http'
 require 'yaml'
 
 module Stlkr
-# This looks crudy, but it just stores websites in a file as a list. There's no
-# point to use a database for something so trivial. The file
-# @author psyomn
 class Website
-
-  # @param url is the url that the site can be located.
-  # @param hash is the previously stored hash of that website, which is only
-  #   provided if the website info is fetched from the yaml db.
   def initialize(url, hash=nil)
     @url = url
     @hashcode = hash
@@ -22,7 +15,6 @@ class Website
     puts e
   end
 
-  # @return all the website urls, as a list of strings
   def self.all
     ws = Array.new
     hh = self.load_contents
@@ -35,11 +27,6 @@ class Website
     ws
   end
 
-  # Read yaml db, and add the url from it if it doesn't exist. If it exists
-  # already, and more parameters are passed such as --username, and --password,
-  # the url configuration is updated.
-  #
-  # @param url is the url to append to the list of sites
   def insert
     cont = Website.load_contents
     cont[@url] = {
@@ -51,10 +38,6 @@ class Website
     FileUtils.touch(TIMESTAMPFILE)
   end
 
-  # Read yaml db, and remove the url from it if it exists
-  #
-  # @param url is the url to delete. It will try to match against a key, and if
-  #   one is found, it is removed from the yaml db.
   def self.delete(url)
     cont = Website.load_contents
     cont.delete url
@@ -62,8 +45,6 @@ class Website
     FileUtils.touch(TIMESTAMPFILE)
   end
 
-  # Choose which type of fetching to do depending on if username or password has
-  # been supplied.
   def fetch!
     if @username.nil? || @password.nil?
       plain_fetch!
@@ -87,8 +68,6 @@ class Website
     fh.close
   end
 
-  # @param path is the path to the file to read
-  # @return a string with the contents of the file
   def self.file_contents(path)
     fh = File.open(path, 'r')
     cont = fh.read
@@ -107,9 +86,6 @@ class Website
 
   private
 
-
-  # Fetch information from password protected site (basic authentication, no
-  # fancy login etc)
   def auth_fetch!
     uri = URI(@url)
     http = Net::HTTP.new(uri.host, uri.port)
@@ -119,12 +95,10 @@ class Website
     @hashcode = Website.hashify(response.body)
   end
 
-  # Fetch information from site, without password protection
   def plain_fetch!
     uri = URI(@url)
     contents = Net::HTTP.get(uri)
     @hashcode = Website.hashify(contents)
   end
-
 end
 end

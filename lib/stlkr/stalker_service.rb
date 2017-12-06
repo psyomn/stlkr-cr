@@ -2,9 +2,7 @@ require 'stlkr'
 require 'time'
 
 module Stlkr
-# @author psyomn
 class StalkerService
-
   def initialize
     @done = false
     @last_date = read_last_timestamp
@@ -35,11 +33,8 @@ class StalkerService
 
   private
 
-  # TODO this should simply check file timestamp and see if it has been altered
-  # since last read
   def db_changed?
     if timestamp_file_exists?
-      # Check last file modification date (we just touch whenever updating)
       if @last_date != read_last_timestamp
         puts "Updating file list"
         @last_date = read_last_timestamp
@@ -52,7 +47,6 @@ class StalkerService
     end
   end
 
-  # Check if there is a timestamp file
   def timestamp_file_exists?
     File.exist? TIMESTAMPFILE
   end
