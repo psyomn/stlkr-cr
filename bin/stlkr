@@ -54,10 +54,6 @@ OptionParser.new do |opts|
   opts.on('-p', '--password PASSWORD', 'set the http password') do |v|
     options[:password] = v
   end
-
-  opts.on('', '--with-libnotify', 'enable libotify for desktop notifications') do |v|
-    options[:with_libnotify] = true
-  end
 end.parse!
 
 

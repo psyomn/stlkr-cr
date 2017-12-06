@@ -1,5 +1,4 @@
 require 'stlkr'
-require 'libnotify'
 require 'time'
 
 module Stlkr
@@ -23,7 +22,6 @@ class StalkerService
         if prev != new
           print "[#{Time.now}] Changed: #{w}"
           w.insert
-          notify_changed(w) if libnotify_enabled
         end
 
         puts
@@ -32,20 +30,10 @@ class StalkerService
     end
   end
 
-  attr_accessor :libnotify_enabled
   attr_accessor :done
   attr_accessor :last_date
 
   private
-
-  def notify_changed(w)
-    Libnotify.show(
-      :body => "#{w.url}",
-      :summary => "#{w.url} has changed",
-      :timeout => 2.5,
-      :icon_path => "/usr/share/icons/Tango/scalable/emblems/emblem-system.svg"
-    )
-  end
 
   # TODO this should simply check file timestamp and see if it has been altered
   # since last read
