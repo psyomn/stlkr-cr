@@ -39,10 +39,6 @@ OptionParser.new do |opts|
     options[:stop_service] = v
   end
 
-  opts.on('-z', '--daemonize', 'run stlkr in background') do |v|
-    options[:daemonize] = v
-  end
-
   opts.on('-l', '--ls-sites', 'list the websites monitored') do |v|
     options[:ls] = v
   end
@@ -56,36 +52,22 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-
 if options[:add_link]
   w = Website.new(options[:add_link])
   w.username = options[:username]
   w.password = options[:password]
   w.insert
-
 elsif options[:delete_link]
   w = Website.delete options[:delete_link]
-
 elsif options[:start_service]
-  # TODO: this shold start the daemon
-  Daemons.run_proc('stlkr -z')
-
-elsif options[:stop_service]
-  # TODO: this should stop the daemon
-
-elsif options[:daemonize]
   th = Thread.new do
     ss = StalkerService.new
-    ss.libnotify_enabled = options[:with_libnotify]
     ss.run
   end
   th.run
-
   th.join
-
 elsif options[:ls]
   Website.all.each do |site|
     puts site.url
   end
-
 end
