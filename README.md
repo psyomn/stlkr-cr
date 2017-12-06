@@ -44,13 +44,6 @@ Everything is stored in text form inside a yaml file:
 
     require 'stlkr'
 
-## Requirements
-
-You'll possibly need the headers of the following
-
-* GTK2
-* libnotify
-
 ## Install
 
     $ gem install stlkr
@@ -62,4 +55,3 @@ Copyright (c) 2015 psyomn
 ## LICENSE
 
 MIT
-
