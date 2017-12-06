@@ -20,8 +20,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'bundler', '~> 1.15'
   gem.add_development_dependency 'rake', '~> 0.8'
   gem.add_development_dependency 'rspec', '~> 2.4'
-  gem.add_development_dependency 'yard', '~> 0.8'
-  gem.add_development_dependency 'inch', '~> 0.6.4'
 
   gem.add_runtime_dependency 'libnotify', '~> 0.9.1'
   gem.add_runtime_dependency 'nokogiri', '~> 1.6.6.2'
