@@ -1,6 +1,5 @@
 require 'stlkr'
 require 'libnotify'
-require 'gtk2'
 require 'time'
 
 module Stlkr

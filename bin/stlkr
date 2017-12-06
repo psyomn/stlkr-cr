@@ -55,10 +55,6 @@ OptionParser.new do |opts|
     options[:password] = v
   end
 
-  opts.on('', '--with-gtk', 'enable gtk such that there is a tray icon') do |v|
-    options[:with_gtk] = v
-  end
-
   opts.on('', '--with-libnotify', 'enable libotify for desktop notifications') do |v|
     options[:with_libnotify] = true
   end
@@ -88,12 +84,6 @@ elsif options[:daemonize]
     ss.run
   end
   th.run
-
-  if options[:with_gtk]
-    si = Gtk::StatusIcon.new
-    si.stock = Gtk::Stock::DIALOG_INFO
-    Gtk.main
-  end
 
   th.join
 
