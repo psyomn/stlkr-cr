@@ -18,6 +18,6 @@ module Stlkr
   # current time.
   TIMESTAMPFILE = File.join(DATADIR, TIMESTAMPFILE_NAME)
 
-  # Seconds to check against a site each time
-  INTERVAL = 10
+  # Seconds
+  INTERVAL = 60 * 60
 end

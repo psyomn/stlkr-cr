@@ -18,8 +18,10 @@ class StalkerService
         new = w.hashcode
 
         if prev != new
-          print "[#{Time.now}] Changed: #{w}"
+          print "[#{Time.now}] Changed    : #{w}"
           w.insert
+        else
+          print "[#{Time.now}] Not Changed: #{w}"
         end
 
         puts
@@ -34,14 +36,10 @@ class StalkerService
   private
 
   def db_changed?
-    if timestamp_file_exists?
-      if @last_date != read_last_timestamp
-        puts "Updating file list"
-        @last_date = read_last_timestamp
-        true
-      else
-        false
-      end
+    if @last_date != read_last_timestamp
+      puts "Updating file list"
+      @last_date = read_last_timestamp
+      true
     else
       false
     end

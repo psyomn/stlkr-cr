@@ -8,7 +8,7 @@ class Boot
     FileUtils.touch Stlkr::URIFILE
   rescue => e
     puts "problem creating datadir, or urifile"
-    pute e
+    puts e
   end
 end
 end
