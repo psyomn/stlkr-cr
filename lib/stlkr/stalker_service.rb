@@ -28,6 +28,9 @@ class StalkerService
       end
       sleep Stlkr::INTERVAL
     end
+  rescue => e
+    puts "Problem reaching sources: #{e}"
+    retry
   end
 
   attr_accessor :done
