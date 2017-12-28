@@ -1,0 +1,13 @@
+name: shardyshard
+version: 0.1.0
+
+authors:
+  - psyomn <lethaljellybean@gmail.com>
+
+targets:
+  stlkr-cr:
+    main: src/stlkr-bin.cr
+
+crystal: 0.23.0+313
+
+license: MIT
