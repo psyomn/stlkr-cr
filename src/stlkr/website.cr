@@ -1,39 +1,52 @@
-require 'stlkr'
-require 'open-uri'
-require 'digest'
-require 'net/http'
-require 'yaml'
+require "../stlkr.cr"
+require "uri"
+require "digest"
+require "http/client"
+require "yaml"
 
 module Stlkr
 class Website
-  def initialize(url, hash=nil)
+  def initialize(url : String, hash : String | Nil = nil)
     @url = url
     @hashcode = hash
-    fetch! if hash.nil?
-  rescue SocketError => e
-    puts "Could not reach host"
-    puts e
+    @username = nil
+    @password = nil
+
+    begin
+      fetch! if hash.nil?
+    rescue e
+      puts "Could not reach host"
+      puts e
+    end
   end
 
   def self.all
-    ws = Array.new
+    ws = Array(Website).new
     hh = self.load_contents
+
     hh.each do |k,v|
-      w = Website.new(k, hh[k][:hashcode])
-      w.username = hh[k][:username]
-      w.password = hh[k][:password]
+      tmp_hashcode = hh[k][":hashcode"]
+      tmp_url = k
+
+      w = Website.new(tmp_url, tmp_hashcode)
+      w.username = hh[k][":username"]
+      w.password = hh[k][":password"]
       ws.push w
     end
     ws
   end
 
+  def to_s
+    "<Website|#{@url}|#{@hashcode}>"
+  end
   def insert
     cont = Website.load_contents
-    cont[@url] = {
-      hashcode: @hashcode,
-      username: @username,
-      password: @password
-    }
+    @hashcode = @hashcode == nil ? "" : @hashcode
+    @username = @username == nil ? "" : @username
+    @password = @password == nil ? "" : @password
+    cont[@url][":hashcode"] = @hashcode
+    cont[@url][":username"] = @username
+    cont[@url][":password"] = @password
     Website.store_contents(cont)
     FileUtils.touch(TIMESTAMPFILE)
   end
@@ -59,45 +72,42 @@ class Website
 
   def self.load_contents
     cont = self.file_contents(Stlkr::URIFILE)
-    YAML.load(cont) || {}
+
+    ret = Hash(String, Hash(String, String | Nil)).new
+    YAML.parse(cont).each do |k,v|
+      tmpin = Hash(String, String | Nil).new
+      tmpin[":hashcode"] = v[":hashcode"].try &.to_s
+      tmpin[":username"] = v[":username"].try &.to_s
+      tmpin[":password"] = v[":password"].try &.to_s
+      ret[k.as_s] = tmpin
+    end
+    ret
   end
 
   def self.store_contents(data_h)
-    fh = File.open(Stlkr::URIFILE, 'w')
-    fh.write(data_h.to_yaml)
-    fh.close
+    File.write(Stlkr::URIFILE, data_h.to_yaml)
   end
 
-  def self.file_contents(path)
-    fh = File.open(path, 'r')
-    cont = fh.read
-    fh.close
-    cont
+  def self.file_contents(path) : String
+    File.read(path)
   end
 
-  def to_s
-    "<Website url:#{@url} hash:#{@hashcode} usr:#{@username} pass:#{@password}>"
-  end
+  property url : String
+  property hashcode : String | Nil
+  property username : String | Nil
+  property password : String | Nil
 
-  attr_accessor :url
-  attr_accessor :hashcode
-  attr_accessor :username
-  attr_accessor :password
-
-  private
-
-  def auth_fetch!
-    uri = URI(@url)
-    http = Net::HTTP.new(uri.host, uri.port)
-    request = Net::HTTP::Get.new(uri.request_uri)
-    request.basic_auth(@username, @password)
-    response = http.request(request)
+  private def auth_fetch!
+    uri = URI.parse(@url)
+    http = HTTP::Client.new(uri)
+    http.basic_auth(@username, @password)
+    response = http.get(uri.full_path)
     @hashcode = Website.hashify(response.body)
   end
 
-  def plain_fetch!
-    uri = URI(@url)
-    contents = Net::HTTP.get(uri)
+  private def plain_fetch!
+    uri = URI.parse(@url)
+    contents = HTTP::Client.get(uri).body
     @hashcode = Website.hashify(contents)
   end
 end
