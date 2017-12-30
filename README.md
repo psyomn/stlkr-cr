@@ -7,10 +7,9 @@
 
 ## Description
 
-This is your friendly stalker, your personal informant on changes that may
-happen to some static sites. At the moment it doesn't work perfectly, but should
-make your life a little easier with sites you only want to check whenever they
-are updated.
+This is a port of the stlkr gem I wrote into a crystal shard. The
+purpose was mainly curiosity in the easiness of migration. Use at own
+risk.
 
 ## Features
 
