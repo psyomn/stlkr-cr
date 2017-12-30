@@ -1,16 +1,16 @@
-require 'stlkr/version'
-require 'stlkr/boot'
-require 'stlkr/website'
-require 'stlkr/stalker_service'
+require "./stlkr/version"
+require "./stlkr/boot"
+require "./stlkr/website"
+require "./stlkr/stalker_service"
 
 module Stlkr
-  NAME = 'stlkr'
-  HOME = ENV['HOME']
+  NAME = "stlkr"
+  HOME = ENV["HOME"]
 
-  URIFILE_NAME = 'uris'
-  TIMESTAMPFILE_NAME = 'lastupdate'
+  URIFILE_NAME = "uris"
+  TIMESTAMPFILE_NAME = "lastupdate"
 
-  CONFIGDIR     = File.join(HOME, '.config')
+  CONFIGDIR     = File.join(HOME, ".config")
   DATADIR       = File.join(CONFIGDIR, NAME)
   URIFILE       = File.join(DATADIR, URIFILE_NAME)
 
