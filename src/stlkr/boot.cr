@@ -1,14 +1,14 @@
-require 'stlkr'
-require 'fileutils'
+require "../stlkr"
+require "file_utils"
 
 module Stlkr
 class Boot
   def self.up!
     FileUtils.mkdir_p Stlkr::DATADIR
     FileUtils.touch Stlkr::URIFILE
-  rescue => e
+  rescue ex
     puts "problem creating datadir, or urifile"
-    puts e
+    puts ex
   end
 end
 end
